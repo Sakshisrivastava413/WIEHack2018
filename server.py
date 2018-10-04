@@ -18,6 +18,9 @@ def analyse_image_route():
 @app.route('/analyse_text', methods=['GET', 'POST'])
 def analyse_text_route():
   data = request.get_json(force=True)
+  if data is None:
+    return "No data"
+  return analyse_text(data['text'])
   
 
 
