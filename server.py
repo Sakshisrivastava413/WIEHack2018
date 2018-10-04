@@ -15,6 +15,11 @@ def analyse_image_route():
   res = analyse_image('./images/uploaded_img.png')
   return res
 
+@app.route('/analyse_text', methods=['GET', 'POST'])
+def analyse_text_route():
+  data = request.get_json(force=True)
+  
+
 
 print('Server ready to receive requests')
 
