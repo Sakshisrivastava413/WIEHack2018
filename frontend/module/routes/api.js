@@ -3,7 +3,7 @@ const parallelDots = require('paralleldots');
 
 const router = express.Router();
 
-parallelDots.apiKey = "WtUsmQtjgqu7uiHZM07jPfgUZI1zDTsVsJF1dU0dqb8";
+parallelDots.apiKey = "a5iS8TR5MmHQUIGFeaYcDXOMxZuuDmQCfAc4N8usBk0";
 
 const handlePromise = (promise, res) => {
   promise.then((response) => {
