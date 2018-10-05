@@ -54,13 +54,9 @@ class App extends Component {
       }
     ).then(res => res.json())
       .then(res => {
-        // console.log(res);
-
-
-
+        // console.log(res)
+        if (!res || !res.sentimentData) return;
         this.setState({
-          ...this.setState,
-          'keywords': res.keywords.keywords,
           'sentimentData': [
             this.state.sentimentData[this.state.sentimentData.length - 3],
             this.state.sentimentData[this.state.sentimentData.length - 2],
@@ -90,6 +86,8 @@ class App extends Component {
         }
       ).then(res => res.json())
         .then(res => {
+        
+          if (!res || !res.facial_emotion) return;
           const emotionData = [];
           let resp = res.facial_emotion;
           this.setState({
