@@ -27,11 +27,11 @@ class EmotionGraph extends Component {
 									data={this.props.emotionData}
 								>
 									<CartesianGrid strokeDasharray="3 3" />
-									<XAxis dataKey="name" />
+									<XAxis dataKey="tag" />
 									<YAxis />
 									<Tooltip />
 									<Legend />
-									<Bar name="Intensity of Emotion" dataKey="value" fill="#4caf50" />
+									<Bar name="Intensity of Emotion" dataKey="score" fill="#4caf50" />
 								</BarChart>
 							</div>
 						</div>

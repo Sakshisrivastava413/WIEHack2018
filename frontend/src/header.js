@@ -17,7 +17,7 @@ class Header extends Component {
             <MenuIcon />
           </IconButton>
           <Typography variant="title" color="inherit">
-            Personality Checker
+            Insta Personality Scan
           </Typography>
         </Toolbar>
       </AppBar>

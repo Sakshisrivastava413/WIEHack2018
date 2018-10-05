@@ -20,9 +20,10 @@ class App extends Component {
   setRef = webcam => {
     this.webcam = webcam;
   };
-   
+
 
   componentDidMount() {
+    this.capture();
     // setInterval(() => {
     //   this.setState({
     //     emotionData: [
@@ -53,11 +54,12 @@ class App extends Component {
       }
     ).then(res => res.json())
       .then(res => {
-        console.log(res);
+        // console.log(res);
 
-        
+
 
         this.setState({
+          ...this.setState,
           'keywords': res.keywords.keywords,
           'sentimentData': [
             this.state.sentimentData[this.state.sentimentData.length - 3],
@@ -65,50 +67,39 @@ class App extends Component {
             this.state.sentimentData[this.state.sentimentData.length - 1],
             res.sentiments.probabilities,
           ]
-
         });
       })
-     
+
   }
 
   capture = () => {
-    let image = this.webcam.getScreenshot();
+    setInterval(() => {
+      let image = this.webcam.getScreenshot();
 
-    if (!image) return;
-    image = image.split('png;base64,')[1]
-    console.log(image)
-// const emotionData = [];
-    fetch(
-      'http://localhost:4000/api/image_analyse', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ image })
-      }
-    ).then(res => res.json())
-    .then(res => {console.log(res)
-      console.log(res.facial_emotion[1].score)
-    const emotionData = [];
-     let resp = res.facial_emotion;
-    // Object.entries(resp).map(item => ({[item[0]]:item[1]}));
-    // // const splitObject = (resp) => Object.keys(resp).map(e => ({ [e]: resp[e] }));
-    //   console.log(this.emotionData)
-    this.emotionData = JSON.parse(JSON.stringify(resp));
-    console.log("data", this.emotionData)
-  }).then(
-  
-    // for (let [key, value] of Object.entries(res.facial_emotion)) {
-    //   emotionData.push({ tag: key, score: value });
-    // }
-    
+      if (!image) return;
+      image = image.split('png;base64,')[1]
+      // console.log(image)
 
-  this.setState({
-    'emotionData': this.emotionData
-  }),
-  console.log("changed", this.emotionData)
-  )
-}
+      fetch(
+        'http://localhost:4000/api/image_analyse', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ image })
+        }
+      ).then(res => res.json())
+        .then(res => {
+          const emotionData = [];
+          let resp = res.facial_emotion;
+          this.setState({
+            'emotionData': resp
+          });
+        });
+
+    }, 1000);
+
+  }
 
   render() {
     const videoConstraints = {
@@ -123,27 +114,26 @@ class App extends Component {
             <RecordVoice onSpeech={this.onSpeech} />
           </div>
           <div>
-          
+
           </div>
           <div className="col-sm-4" style={{ marginTop: 20 }}>
-          <div className="box">
-        <Paper
-          elevation={5}
-          style={{ padding: 20 }}>
-          <Webcam
-            style={{ maxWidth: '100%', maxHeight: 250 }}
-            ref={this.setRef}
-            screenshotFormat="image/png"
-            width={440}
-            videoConstraints={videoConstraints}
-          />
-        </Paper>
-        </div>
-            <button onClick={this.capture}>Capture photo</button>
+            <div className="box">
+              <Paper
+                elevation={5}
+                style={{ padding: 20 }}>
+                <Webcam
+                  style={{ maxWidth: '100%', maxHeight: 250 }}
+                  ref={this.setRef}
+                  screenshotFormat="image/png"
+                  width={440}
+                  videoConstraints={videoConstraints}
+                />
+              </Paper>
             </div>
+          </div>
         </div>
         <div className="row around-sm" style={{ height: 300 }}>
-          
+
           <div className="col-sm-6" style={{ marginTop: 25 }}>
             <SentimentGraph sentimentData={this.state.sentimentData} />
           </div>

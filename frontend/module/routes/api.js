@@ -8,10 +8,10 @@ parallelDots.apiKey = "WtUsmQtjgqu7uiHZM07jPfgUZI1zDTsVsJF1dU0dqb8";
 const handlePromise = (promise, res) => {
   promise.then((response) => {
     res.send(response);
-    console.log(response);
+    // console.log(response);
   }).catch((error) => {
     res.send(error);
-    console.log(error);
+    // console.log(error);
   });
 }
 
@@ -22,7 +22,7 @@ router.post('/image_analyse', function(req, res) {
   require("fs").writeFile("routes/uploaded.png", image, 'base64', function(err) {
     parallelDots.facialEmotion(__dirname + '/uploaded.png', 'local')
       .then((result) => {
-        console.log(result)
+        // console.log(result)
         res.send(result);
       }).catch(err => {
         res.send(err);
